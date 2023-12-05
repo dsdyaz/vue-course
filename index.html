@@ -4,14 +4,48 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>vue app</title>
+    <style>
+      .box {
+        background-color: blueviolet;
+        height: 200px;
+        width: 200px;
+      }
+      [v-cloak] {
+        display: none;
+      }
+    </style>
   </head>
   <body>
-    <div id="app">hello vue</div>
+    <div id="app" v-cloak>
+      <div>{{ greeting }}</div>
+      <input @keyup.enter="greet(greeting + '!!!!!')" v-model="greeting" type="text">
+
+      <hr>
+
+      <button @click.right.prevent="toggleBox">toggle box</button>
+      <div v-if="isVisible" class="box"></div>
+      
+    </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
-      const app = Vue.createApp({});
-      app.mount("#app")
+      const app = Vue.createApp({
+        data: function () {
+          return {
+            greeting: "hello vue3!!",
+            isVisible: false,
+          };
+        },
+        methods: {
+          toggleBox() {
+              this.isVisible = !this.isVisible
+          },
+          greet(greeting) {
+            console.log(greeting)
+          }
+        }
+      });
+      app.mount("#app");
     </script>
   </body>
 </html>
