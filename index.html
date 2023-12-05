@@ -13,12 +13,15 @@
       [v-cloak] {
         display: none;
       }
+      input {
+        margin: 10px;
+        display: block;
+      }
     </style>
   </head>
   <body>
     <div id="app" v-cloak>
-      <div>{{ greeting }}</div>
-      <input @keyup.enter="greet(greeting + '!!!!!')" v-model="greeting" type="text">
+      <login-form />
 
       <hr>
 
@@ -45,6 +48,28 @@
           }
         }
       });
+      app.component('login-form', {
+        template: `
+          <form @submit.prevent="handleSubmit">
+            <h1>{{this.title}}</h1>
+            <input type="email" v-model="email"/>
+            <input type="password" v-model="password"/>
+            <button>submit</button>
+          </form>
+        `,
+        data() {
+          return {
+            title: 'login form!',
+            email: "",
+            password: ""
+          }
+        },
+        methods: {
+          handleSubmit() {
+            console.log("submitted", this.email, this.password)
+          }
+        }
+      })
       app.mount("#app");
     </script>
   </body>
